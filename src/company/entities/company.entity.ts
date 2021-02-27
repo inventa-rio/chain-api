@@ -4,8 +4,12 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   DeleteDateColumn,
+  Unique,
+  OneToMany,
 } from 'typeorm';
 
+import {Warehouse} from "../../warehouse/entities/warehouse.entity"
+@Unique(['cnpj'])
 @Entity()
 export class Company {
   @PrimaryGeneratedColumn()
@@ -31,5 +35,7 @@ export class Company {
 
   @DeleteDateColumn({ name: 'deleted_at' })
   private deletedAt: Date;
-
+  
+  @OneToMany(() => Warehouse, warehouse => warehouse.company)
+  public warehouses: Warehouse[];
 }
