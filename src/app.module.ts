@@ -2,6 +2,10 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { PickupModule } from './pickup/pickup.module';
+import { WarehouseModule } from './warehouse/warehouse.module';
+import { CompanyModule } from './company/company.module';
+import { TargetModule } from './target/target.module';
 
 @Module({ // Well, database credentials shouldn't be open on github, but thats life
   imports: [
@@ -15,6 +19,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         rejectUnauthorized: false,
       },
     }),
+    PickupModule,
+    WarehouseModule,
+    CompanyModule,
+    TargetModule,
   ],
   controllers: [AppController],
   providers: [AppService],
