@@ -8,7 +8,7 @@ import { Warehouse } from 'src/warehouse/entities/warehouse.entity';
 @Module({
   imports:[TypeOrmModule.forFeature([Target, Warehouse])],
   controllers: [PickupController],
-  providers: [PickupService]
+  providers: [PickupService],
   exports: [TypeOrmModule]
 })
 export class PickupModule {}
