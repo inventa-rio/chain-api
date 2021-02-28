@@ -19,7 +19,7 @@ export class Company {
   @Column()
   private cnpj: string;
 
-  @Column()
+  @Column({type: "float"})
   private sellRate: number;
 
   @Column()
@@ -40,9 +40,13 @@ export class Company {
   @OneToMany(
     () => Warehouse,
     warehouse => warehouse.company,
+    { cascade: true },
   )
   public warehouses: Warehouse[];
 
-  @OneToMany(() => Target, target => target.company)
-  public targets: Target[];  
+  @OneToMany(
+    () => Target,
+    target => target.company,{cascade: true}
+  )
+  public targets: Target[];
 }

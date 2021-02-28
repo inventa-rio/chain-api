@@ -16,6 +16,10 @@ export class CompanyController {
   findAll() {
     return this.companyService.findAll();
   }
+  @Get('/eager')
+  eagerfindAll() {
+    return this.companyService.eagerFindAll();
+  }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
