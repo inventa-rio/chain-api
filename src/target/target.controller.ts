@@ -17,6 +17,11 @@ export class TargetController {
     return this.targetService.findAll();
   }
 
+  @Get('/eager')
+  eagerFindAll() {
+    return this.targetService.eagerFindAll();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.targetService.findOne(+id);

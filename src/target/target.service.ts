@@ -1,26 +1,37 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateTargetDto } from './dto/create-target.dto';
 import { UpdateTargetDto } from './dto/update-target.dto';
+import { Target } from './entities/target.entity';
 
 @Injectable()
 export class TargetService {
-  create(createTargetDto: CreateTargetDto) {
-    return 'This action adds a new target';
+constructor(
+  @InjectRepository(Target) 
+  private targetRepository: Repository<Target>
+){}
+  async create(createTargetDto: CreateTargetDto) {
+    return await this.targetRepository.save(createTargetDto);
   }
 
-  findAll() {
-    return `This action returns all target`;
+  async findAll() {
+    return await this.targetRepository.findAndCount();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} target`;
+  async eagerFindAll() {
+    return await this.targetRepository.findAndCount({relations: ['pickups', 'company']});
   }
 
-  update(id: number, updateTargetDto: UpdateTargetDto) {
-    return `This action updates a #${id} target`;
+  async findOne(id: number) {
+    return await this.targetRepository.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} target`;
+  async update(id: number, updateTargetDto: UpdateTargetDto) {
+    return await this.targetRepository.update(id, updateTargetDto);
+  }
+
+  async remove(id: number) {
+    return await this.targetRepository.softDelete(id);
   }
 }
