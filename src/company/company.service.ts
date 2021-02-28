@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, UpdateResult } from 'typeorm';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
 import { Company } from './entities/company.entity';
@@ -27,11 +27,11 @@ export class CompanyService {
     return await this.companyRepository.findOne(id, {relations: ['warehouses', 'targets']});
   }
 
-  update(id: number, updateCompanyDto: UpdateCompanyDto) {
-    return `This action updates a #${id} company`;
+  async update(id: number, updateCompanyDto: UpdateCompanyDto): Promise<UpdateResult> {
+    return await this.companyRepository.update(id, updateCompanyDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} company`;
+  async remove(id: number): Promise<UpdateResult> {
+    return await this.companyRepository.softDelete(id);
   }
 }
