@@ -1,26 +1,37 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository, UpdateResult } from 'typeorm';
 import { CreateWarehouseDto } from './dto/create-warehouse.dto';
 import { UpdateWarehouseDto } from './dto/update-warehouse.dto';
+import { Warehouse } from './entities/warehouse.entity';
 
 @Injectable()
 export class WarehouseService {
-  create(createWarehouseDto: CreateWarehouseDto) {
-    return 'This action adds a new warehouse';
+  constructor(
+    @InjectRepository(Warehouse) 
+    private warehouseRepository: Repository<Warehouse>
+  ){}
+  async create(createWarehouseDto: CreateWarehouseDto) {
+    return this.warehouseRepository.save(createWarehouseDto);
   }
 
-  findAll() {
-    return `This action returns all warehouse`;
+  async findAll() {
+    return await this.warehouseRepository.findAndCount();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} warehouse`;
+  async eagerFindAll() {
+    return await this.warehouseRepository.findAndCount({relations: ["company"]});
   }
 
-  update(id: number, updateWarehouseDto: UpdateWarehouseDto) {
-    return `This action updates a #${id} warehouse`;
+  findOne(id: number): Promise<Warehouse> {
+    return  this.warehouseRepository.findOne(id, {relations: ['company']});
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} warehouse`;
+  update(id: number, updateWarehouseDto: UpdateWarehouseDto): Promise<UpdateResult> {
+    return this.warehouseRepository.update(id, updateWarehouseDto);
+  }
+
+  remove(id: number): Promise<UpdateResult>{
+    return this.warehouseRepository.softDelete(id);
   }
 }

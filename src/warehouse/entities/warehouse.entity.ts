@@ -10,7 +10,7 @@ export class Warehouse {
     private address: string;
 
     @CreateDateColumn()
-    private create: Date;
+    private created: Date;
 
     @DeleteDateColumn({name: 'deleted_at'})
     private deletedAt: Date;
