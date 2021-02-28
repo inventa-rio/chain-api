@@ -15,7 +15,11 @@ export class Warehouse {
     @DeleteDateColumn({name: 'deleted_at'})
     private deletedAt: Date;
 
+    @Column({default: false})
+    private deleted: boolean;
+    
+    
     @ManyToOne(() => Company, company => company.warehouses)
-    company: Company
+    public company: Company
 
 }

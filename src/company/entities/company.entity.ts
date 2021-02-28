@@ -8,7 +8,8 @@ import {
   OneToMany,
 } from 'typeorm';
 
-import {Warehouse} from "../../warehouse/entities/warehouse.entity"
+import { Warehouse } from '../../warehouse/entities/warehouse.entity';
+import { Target } from '../../target/entities/target.entity';
 @Unique(['cnpj'])
 @Entity()
 export class Company {
@@ -35,7 +36,13 @@ export class Company {
 
   @DeleteDateColumn({ name: 'deleted_at' })
   private deletedAt: Date;
-  
-  @OneToMany(() => Warehouse, warehouse => warehouse.company)
+
+  @OneToMany(
+    () => Warehouse,
+    warehouse => warehouse.company,
+  )
   public warehouses: Warehouse[];
+
+  @OneToMany(() => Target, target => target.company)
+  public targets: Target[];  
 }
