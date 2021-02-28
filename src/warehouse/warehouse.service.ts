@@ -8,9 +8,9 @@ import { Warehouse } from './entities/warehouse.entity';
 @Injectable()
 export class WarehouseService {
   constructor(
-    @InjectRepository(Warehouse) 
-    private warehouseRepository: Repository<Warehouse>
-  ){}
+    @InjectRepository(Warehouse)
+    private warehouseRepository: Repository<Warehouse>,
+  ) {}
   async create(createWarehouseDto: CreateWarehouseDto) {
     return this.warehouseRepository.save(createWarehouseDto);
   }
@@ -20,18 +20,23 @@ export class WarehouseService {
   }
 
   async eagerFindAll() {
-    return await this.warehouseRepository.findAndCount({relations: ["company"]});
+    return await this.warehouseRepository.findAndCount({
+      relations: ['company', 'pickups']
+    });
   }
 
   findOne(id: number): Promise<Warehouse> {
-    return  this.warehouseRepository.findOne(id, {relations: ['company']});
+    return this.warehouseRepository.findOne(id, { relations: ['company'] });
   }
 
-  update(id: number, updateWarehouseDto: UpdateWarehouseDto): Promise<UpdateResult> {
+  update(
+    id: number,
+    updateWarehouseDto: UpdateWarehouseDto,
+  ): Promise<UpdateResult> {
     return this.warehouseRepository.update(id, updateWarehouseDto);
   }
 
-  remove(id: number): Promise<UpdateResult>{
+  remove(id: number): Promise<UpdateResult> {
     return this.warehouseRepository.softDelete(id);
   }
 }

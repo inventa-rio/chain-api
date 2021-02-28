@@ -4,9 +4,10 @@ import { PickupController } from './pickup.controller';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import { Target } from 'src/target/entities/target.entity';
 import { Warehouse } from 'src/warehouse/entities/warehouse.entity';
+import { Pickup } from './entities/pickup.entity';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([Target, Warehouse])],
+  imports:[TypeOrmModule.forFeature([Target, Warehouse, Pickup])],
   controllers: [PickupController],
   providers: [PickupService],
   exports: [TypeOrmModule]

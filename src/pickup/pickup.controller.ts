@@ -17,6 +17,11 @@ export class PickupController {
     return this.pickupService.findAll();
   }
 
+  @Get('/eager')
+  eagerFindAll() {
+    return this.pickupService.findAll();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.pickupService.findOne(+id);

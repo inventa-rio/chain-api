@@ -1,5 +1,6 @@
-import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, DeleteDateColumn, ManyToOne} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, DeleteDateColumn, ManyToOne, OneToMany} from "typeorm";
 import {Company} from "../../company/entities/company.entity"
+import {Pickup} from "../../pickup/entities/pickup.entity"
 @Entity()
 export class Warehouse {
     
@@ -21,5 +22,8 @@ export class Warehouse {
     
     @ManyToOne(() => Company, company => company.warehouses)
     public company: Company
+
+    @OneToMany(()=> Pickup, pickup => pickup.warehouse, {cascade: true})
+    public pickups: Pickup[];
 
 }
